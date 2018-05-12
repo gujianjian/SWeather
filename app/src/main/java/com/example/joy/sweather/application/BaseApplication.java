@@ -1,6 +1,7 @@
 package com.example.joy.sweather.application;
 
 import android.app.Application;
+import android.content.Context;
 
 import org.litepal.LitePal;
 
@@ -13,9 +14,16 @@ import org.litepal.LitePal;
 
 public class BaseApplication extends Application {
 
+    public static   Context mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext=this;
         LitePal.initialize(this);
+    }
+
+    public static  Context getInstance(){
+        return mContext;
     }
 }

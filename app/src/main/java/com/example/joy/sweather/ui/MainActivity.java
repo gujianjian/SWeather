@@ -1,8 +1,9 @@
-package com.example.joy.sweather;
+package com.example.joy.sweather.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.joy.sweather.R;
 import com.example.joy.sweather.utils.Canstants;
 import com.example.joy.sweather.utils.Common;
 import com.example.joy.sweather.utils.NetUtil;

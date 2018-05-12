@@ -1,10 +1,8 @@
-package com.example.joy.sweather.fragments.base;
+package com.example.joy.sweather.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
-import com.example.joy.sweather.Constract.presenter.base.BasePresenter;
 
 /**
  * Created by joy on 2018/5/12.
@@ -15,7 +13,7 @@ import com.example.joy.sweather.Constract.presenter.base.BasePresenter;
 
 
 /**
- * 初始化view 并绑定presenter
+ * 初始化presenter 并绑定view
  * @param <V>
  * @param <T>
  */

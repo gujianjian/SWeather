@@ -13,12 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.joy.sweather.Constract.presenter.AeraPresenter;
-import com.example.joy.sweather.Constract.view.AeraView;
+import com.example.joy.sweather.Constract.view.IAeraView;
 import com.example.joy.sweather.R;
-import com.example.joy.sweather.fragments.base.BaseFragment;
+import com.example.joy.sweather.base.BaseFragment;
 import com.example.joy.sweather.utils.Canstants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ import java.util.List;
  * 简介
  */
 
-public class ChooseAreaFragment extends BaseFragment<AeraView,AeraPresenter> implements AeraView, AdapterView.OnItemClickListener, View.OnClickListener {
+public class ChooseAreaFragment extends BaseFragment<IAeraView,AeraPresenter> implements IAeraView, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private TextView tvTitle;
     private Button btnBack;
@@ -98,6 +97,7 @@ public class ChooseAreaFragment extends BaseFragment<AeraView,AeraPresenter> imp
         tvTitle.setText(text);
     }
 
+
     @Override
     public void backButtonShow() {
         btnBack.setVisibility(View.VISIBLE);
@@ -107,6 +107,17 @@ public class ChooseAreaFragment extends BaseFragment<AeraView,AeraPresenter> imp
     public void backButtonHide() {
         btnBack.setVisibility(View.INVISIBLE);
     }
+
+    @Override
+    public void showDialog() {
+        presenter.showProgressDialog(getActivity());
+    }
+
+    @Override
+    public void hideDialog() {
+        presenter.hideProgressDialog();
+    }
+
 
     @Override
     public void onClick(View v) {

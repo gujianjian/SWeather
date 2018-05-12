@@ -1,4 +1,4 @@
-package com.example.joy.sweather.Constract.presenter.base;
+package com.example.joy.sweather.base;
 
 /**
  * Created by joy on 2018/5/12.
