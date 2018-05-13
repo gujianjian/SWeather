@@ -16,4 +16,11 @@ public interface IWeatherInfoView {
 
     //失败错误信息
     void onFailure(String msg);
+
+    //加载bing背景图片
+    void loadBingPic(String url);
+
+    //设置停止更新
+    void downRefresh();
+
 }

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.joy.sweather.Constract.presenter.WeatherInfoPresenter;
 import com.example.joy.sweather.Constract.view.IWeatherInfoView;
 import com.example.joy.sweather.R;
@@ -49,6 +51,11 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     private ImageView iv_image_pic;
     private TextView tv_tmp;
     private LinearLayout ll_weather;
+
+    private ImageView iv_bing_pic;
+
+    private SwipeRefreshLayout srl_refresh;
+    private String weatherId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +105,18 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
         ll_weather = findViewById(R.id.ll_weather);
 
+        //背景图
+        iv_bing_pic = findViewById(R.id.iv_bing_pic);
+
+        //更新
+        srl_refresh = findViewById(R.id.srl_refresh);
+        srl_refresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        srl_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.resume(weatherId);
+            }
+        });
 
     }
 
@@ -111,7 +130,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         super.onResume();
         Intent intent = getIntent();
         Bundle data = intent.getExtras();
-        String weatherId=data.getString("weatherId");
+        weatherId = data.getString("weatherId");
         presenter.resume(weatherId);
     }
 
@@ -127,6 +146,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         if(weather.status.equals("ok")){
 
             ll_weather.setVisibility(View.VISIBLE);
+
+
 
             String body_tmp = weather.now.body_tmp;//体感温度
             String wind_deg = weather.now.wind_deg;//风向角度
@@ -181,5 +202,20 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     public void onFailure(String msg) {
         Toast.makeText(WeatherInfoActivity.this, msg, Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    /**
+     * 加载背景图
+     * @param url
+     */
+    @Override
+    public void loadBingPic(String url) {
+        Glide.with(this).load(url).into(iv_bing_pic);
+    }
+
+    @Override
+    public void downRefresh() {
+        srl_refresh.setRefreshing(false);
     }
 }

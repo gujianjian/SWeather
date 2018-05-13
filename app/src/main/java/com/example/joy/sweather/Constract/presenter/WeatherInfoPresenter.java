@@ -51,9 +51,36 @@ public class WeatherInfoPresenter extends BasePresenter<IWeatherInfoView> {
                     @Override
                     public void run() {
                         mView.showInfo(weather);
+                        mView.downRefresh();
                     }
                 });
 
+            }
+        });
+
+        loadPic();
+    }
+
+
+    //加载bing图片
+
+    public void loadPic(){
+        NetUtil.sendOkhttpClient(Canstants.BING_PIC_ADDRESS, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                mView.onFailure(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                final String s=response.body().string();
+
+                mHanlder.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.loadBingPic(s);
+                    }
+                });
             }
         });
     }

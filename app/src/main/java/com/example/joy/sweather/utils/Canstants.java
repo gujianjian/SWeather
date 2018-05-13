@@ -20,5 +20,9 @@ public class Canstants {
     //实况天气GET weather/Now   string.format(WEATHER_NOW_ADDRESS,"key=ea0791533462468d9304948e3307963b&location=CN101010100")
     public final static String WEATHER_NOW_ADDRESS="https://free-api.heweather.com/s6/weather/now?%s";
 
+    //WEATHER_KEY
     public final static String WEATHER_KEY="ea0791533462468d9304948e3307963b";
+
+    //每天变换的bing图片
+    public final static String BING_PIC_ADDRESS="http://guolin.tech/api/bing_pic";
 }
