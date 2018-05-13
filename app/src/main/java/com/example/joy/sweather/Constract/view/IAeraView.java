@@ -23,6 +23,7 @@ public interface IAeraView {
     //隐藏加载对话框
     void hideDialog();
 
+    void invokeWeatherInfo(String weatherId);
     void backButtonShow();
     void backButtonHide();
 

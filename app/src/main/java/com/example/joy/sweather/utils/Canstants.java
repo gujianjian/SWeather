@@ -9,13 +9,16 @@ package com.example.joy.sweather.utils;
 
 public class Canstants {
 
-    //省链接
-    public final static String provinceAddress="http://guolin.tech/api/china";
-    //市链接
-    public final static String cityAddress="http://guolin.tech/api/china/%d";
-    //县链接
-    public final static String countyAddress="http://guolin.tech/api/china/%d/%d";
 
-    //实况天气GET weather/now   string.format(WEATHER_NOW_ADDRESS,"key=ea0791533462468d9304948e3307963b&location=北京")
+    //省链接
+    public final static String PROVINCE_ADDRESS ="http://guolin.tech/api/china";
+    //市链接
+    public final static String CITY_ADDRESS ="http://guolin.tech/api/china/%d";
+    //县链接
+    public final static String COUNTY_ADDRESS ="http://guolin.tech/api/china/%d/%d";
+
+    //实况天气GET weather/Now   string.format(WEATHER_NOW_ADDRESS,"key=ea0791533462468d9304948e3307963b&location=CN101010100")
     public final static String WEATHER_NOW_ADDRESS="https://free-api.heweather.com/s6/weather/now?%s";
+
+    public final static String WEATHER_KEY="ea0791533462468d9304948e3307963b";
 }

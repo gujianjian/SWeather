@@ -8,6 +8,8 @@ package com.example.joy.sweather.entity;
  */
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  *
  "basic": {
@@ -23,5 +25,25 @@ package com.example.joy.sweather.entity;
  */
 public class Basic {
 
-    private String cityName;
+    @SerializedName("location")
+    public String cityName;
+
+    @SerializedName("cid")
+    public String weather_id;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getWeather_id() {
+        return weather_id;
+    }
+
+    public void setWeather_id(String weather_id) {
+        this.weather_id = weather_id;
+    }
 }

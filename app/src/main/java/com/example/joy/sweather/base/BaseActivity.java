@@ -25,6 +25,8 @@ public abstract class BaseActivity<V,T extends BasePresenter<V>> extends AppComp
         presenter=initPresenter();
     }
 
+    protected abstract void initView();
+
     protected abstract T initPresenter();
 
 

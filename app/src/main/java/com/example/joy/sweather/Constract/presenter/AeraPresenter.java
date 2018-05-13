@@ -57,6 +57,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
 
     private City selectedCity;
     private ProgressDialog progressDialog;
+    private List<County> all_counties;
 
 
     public AeraPresenter() {
@@ -96,10 +97,15 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
         if(currentLevel==PROVINCE_LEVEL){
             selectedProvince = all_province.get(position);
             queryCity();
-            currentLevel=CITY_LEVEL;
+
         }else if (currentLevel==CITY_LEVEL){
             selectedCity = all_cities.get(position);
             queryCounty();
+            currentLevel=COUNTY_LEVEL;
+        } else if (currentLevel == COUNTY_LEVEL) {
+            County county = all_counties.get(position);
+            String weatherId = county.getWeatherId();
+            mView.invokeWeatherInfo(weatherId);
         }
     }
 
@@ -116,6 +122,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
             for (Province p : all_province) {
                 dataList.add(p.getProvinceName());
             }
+            currentLevel=PROVINCE_LEVEL;
 
             mHandler.post(new Runnable() {
                 @Override
@@ -125,7 +132,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
             });
 
         }else{
-            String address=Canstants.provinceAddress;
+            String address=Canstants.PROVINCE_ADDRESS;
             queryFormServer(address,"province");
         }
     }
@@ -146,7 +153,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
             for (City city : all_cities) {
                 dataList.add(city.getCityName());
             }
-
+            currentLevel=CITY_LEVEL;
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -156,7 +163,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
 
 
         }else{
-            String address = String.format(Locale.CHINA,Canstants.cityAddress, selectedProvince.getProvinceCode());
+            String address = String.format(Locale.CHINA,Canstants.CITY_ADDRESS, selectedProvince.getProvinceCode());
             queryFormServer(address,"city");
         }
 
@@ -165,7 +172,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
     private void queryCounty() {
         mView.setTitle(selectedCity.getCityName());
         mView.backButtonShow();
-        List<County> all_counties = DataSupport.where("cityCode = ?", String.valueOf(selectedCity.getCityCode())).find(County.class);
+        all_counties = DataSupport.where("cityCode = ?", String.valueOf(selectedCity.getCityCode())).find(County.class);
         if (all_counties.size() > 0) {
             dataList.clear();
             for (County county : all_counties) {
@@ -175,7 +182,7 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
             mView.setListItem(dataList);
 
         }else{
-            String address = String.format(Locale.CHINA, Canstants.countyAddress, selectedProvince.getProvinceCode(), selectedCity.getCityCode());
+            String address = String.format(Locale.CHINA, Canstants.COUNTY_ADDRESS, selectedProvince.getProvinceCode(), selectedCity.getCityCode());
             queryFormServer(address,"county");
         }
     }

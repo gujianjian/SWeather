@@ -1,5 +1,7 @@
 package com.example.joy.sweather.Constract.view;
 
+import com.example.joy.sweather.entity.Weather;
+
 /**
  * Created by joy on 2018/5/12.
  * 项目名   SWeather
@@ -8,5 +10,10 @@ package com.example.joy.sweather.Constract.view;
  */
 
 public interface IWeatherInfoView {
-    void showInfo();
+
+    //显示天气信息
+    void showInfo(Weather weather);
+
+    //失败错误信息
+    void onFailure(String msg);
 }

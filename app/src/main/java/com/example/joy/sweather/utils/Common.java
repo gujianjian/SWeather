@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.example.joy.sweather.entity.City;
 import com.example.joy.sweather.entity.County;
 import com.example.joy.sweather.entity.Province;
+import com.example.joy.sweather.entity.Weather;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -115,6 +118,25 @@ public class Common {
         }
 
         return false;
+    }
+
+
+    /**
+     * 解析json数据
+     * @param response
+     * @return
+     */
+    public static Weather parseGson(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
+            JSONObject weatherObject = jsonArray.getJSONObject(0);
+            String weatherStr=weatherObject.toString();
+            return new Gson().fromJson(weatherStr,new TypeToken<Weather>(){}.getType());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

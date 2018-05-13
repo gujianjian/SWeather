@@ -1,5 +1,6 @@
 package com.example.joy.sweather.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.example.joy.sweather.Constract.presenter.AeraPresenter;
 import com.example.joy.sweather.Constract.view.IAeraView;
 import com.example.joy.sweather.R;
 import com.example.joy.sweather.base.BaseFragment;
+import com.example.joy.sweather.ui.WeatherInfoActivity;
 import com.example.joy.sweather.utils.Canstants;
 
 import java.util.List;
@@ -56,7 +58,7 @@ public class ChooseAreaFragment extends BaseFragment<IAeraView,AeraPresenter> im
     public void onResume() {
         super.onResume();
         //初始化显示省级列表
-        presenter.onResume(Canstants.provinceAddress);
+        presenter.onResume(Canstants.PROVINCE_ADDRESS);
     }
 
     //实例化presenter
@@ -83,42 +85,80 @@ public class ChooseAreaFragment extends BaseFragment<IAeraView,AeraPresenter> im
     }
 
 
-    //点击填充并切换数据
+    /**
+     * 点击填充并切换数据
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         presenter.onItemClicked(position);
     }
 
 
+    /**
+     * 启动WeatherInfoActivity
+     * @param weatherId weatherId
+     */
+    @Override
+    public void invokeWeatherInfo(String weatherId) {
+        Intent intent = new Intent(getActivity(), WeatherInfoActivity.class);
+        Bundle data = new Bundle();
+        data.putString("weatherId", weatherId);
+        intent.putExtras(data);
+        getActivity().startActivity(intent);
 
+    }
 
+    /**
+     * 设置标题
+     * @param text
+     */
     @Override
     public void setTitle(String text) {
         tvTitle.setText(text);
     }
 
 
+    /**
+     * 显示返回箭头button
+     */
     @Override
     public void backButtonShow() {
         btnBack.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 隐藏返回箭头button
+     */
     @Override
     public void backButtonHide() {
         btnBack.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * 显示加载中对话框
+     */
     @Override
     public void showDialog() {
         presenter.showProgressDialog(getActivity());
     }
 
+    /**
+     * 隐藏加载中对话框
+     */
     @Override
     public void hideDialog() {
         presenter.hideProgressDialog();
     }
 
 
+    /**
+     * 点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
