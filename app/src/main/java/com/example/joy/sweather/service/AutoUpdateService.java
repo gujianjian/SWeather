@@ -10,6 +10,10 @@ import android.os.SystemClock;
 import com.example.joy.sweather.utils.L;
 
 public class AutoUpdateService extends Service {
+
+    private AlarmManager manager;
+    private PendingIntent pi;
+
     public AutoUpdateService() {
     }
 
@@ -24,11 +28,19 @@ public class AutoUpdateService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         L.d("开始自动更新");
-        AlarmManager manager= (AlarmManager) getSystemService(ALARM_SERVICE);
+        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long updatetime=SystemClock.elapsedRealtime()+2000;
         Intent i = new Intent(this, AutoUpdateService.class);
-        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,updatetime,pi);
+        pi = PendingIntent.getService(this, 0, i, 0);
+
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,updatetime, pi);
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //取消定时任务
+        manager.cancel(pi);
     }
 }
