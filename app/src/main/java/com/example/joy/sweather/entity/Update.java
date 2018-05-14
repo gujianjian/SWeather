@@ -17,8 +17,8 @@ public class Update {
      * utc : 2017-10-26 09:29UTC时间
      */
     @SerializedName("loc")
-    private String locTime;
-    private String utc;
+    public String locTime;
+    public String utc;
 
     public String getLocTime() {
         return locTime;

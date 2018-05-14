@@ -14,108 +14,108 @@
         android:src="@drawable/a100" />
 
 
-    <LinearLayout
-        android:id="@+id/ll_weather"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:orientation="vertical">
-
-
-        <include layout="@layout/layout_title_info" />
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/srl_refresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
         <ScrollView
-
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <LinearLayout
+                android:id="@+id/ll_weather"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:background="#9000"
+
                 android:orientation="vertical">
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_fl"
+
+                <include layout="@layout/layout_title_info" />
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="20°"
-                    app:weather_title="体感温度" />
+                    android:layout_height="match_parent"
+                    android:background="#9000"
+                    android:orientation="vertical">
+
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_fl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="20°"
+                        app:weather_title="体感温度" />
 
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_wind_deg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="305°"
-                    app:weather_title="风向360角度" />
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_wind_deg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="305°"
+                        app:weather_title="风向360角度" />
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_wind_dir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="西北"
-                    app:weather_title="风向" />
-
-
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_wind_sc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="3级"
-                    app:weather_title="风力" />
-
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_wind_spd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="15"
-                    app:weather_title="风速" />
-
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_hum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="40%"
-                    app:weather_title="相对湿度" />
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_wind_dir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="西北"
+                        app:weather_title="风向" />
 
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_pcpn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="0"
-                    app:weather_title="降水量" />
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_wind_sc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="3级"
+                        app:weather_title="风力" />
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_vis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="10公里"
-                    app:weather_title="能见度" />
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_wind_spd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="15"
+                        app:weather_title="风速" />
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_pres"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="1020帕"
-                    app:weather_title="大气压强" />
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_hum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="40%"
+                        app:weather_title="相对湿度" />
 
-                <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-                    android:id="@+id/weather_item_cloud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:weather_content="23"
-                    app:weather_title="云量" />
+
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_pcpn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="0"
+                        app:weather_title="降水量" />
+
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_vis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="10公里"
+                        app:weather_title="能见度" />
+
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_pres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="1020帕"
+                        app:weather_title="大气压强" />
+
+                    <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+                        android:id="@+id/weather_item_cloud"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:weather_content="23"
+                        app:weather_title="云量" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-    </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

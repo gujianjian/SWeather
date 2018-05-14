@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +22,6 @@ import com.example.joy.sweather.base.BaseActivity;
 import com.example.joy.sweather.entity.Weather;
 import com.example.joy.sweather.ui.common.WeatherInfoCommonView;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -54,6 +51,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     private LinearLayout ll_weather;
 
     private ImageView iv_bing_pic;
+
+    private TextView tv_update_time;//更新时间
 
     private SwipeRefreshLayout srl_refresh;
     private String weatherId;
@@ -125,6 +124,9 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
             }
         });
 
+
+        tv_update_time = findViewById(R.id.tv_update_time);
+
     }
 
     @Override
@@ -189,6 +191,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
                 e.printStackTrace();
             }
             tv_tmp.setText(tmp+"°");
+
+            tv_update_time.setText(weather.update.locTime);
 
 
             /********设置详细信息****************************/
