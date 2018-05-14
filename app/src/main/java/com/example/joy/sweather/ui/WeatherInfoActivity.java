@@ -1,5 +1,6 @@
 package com.example.joy.sweather.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -65,6 +66,12 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         initView();
 
 
+    }
+
+    public static void createIntent(Context context, Bundle bundle) {
+        Intent intent=new Intent(context, WeatherInfoActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     @Override
@@ -133,6 +140,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         weatherId = data.getString("weatherId");
         presenter.resume(weatherId);
     }
+
+
 
     /**
      * 加载天气详细信息
@@ -217,5 +226,11 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     @Override
     public void downRefresh() {
         srl_refresh.setRefreshing(false);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

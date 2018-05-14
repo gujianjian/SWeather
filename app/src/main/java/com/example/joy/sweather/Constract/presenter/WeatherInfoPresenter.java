@@ -2,6 +2,7 @@ package com.example.joy.sweather.Constract.presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.example.joy.sweather.Constract.view.IWeatherInfoView;
 import com.example.joy.sweather.base.BasePresenter;
@@ -9,6 +10,7 @@ import com.example.joy.sweather.entity.Weather;
 import com.example.joy.sweather.utils.Canstants;
 import com.example.joy.sweather.utils.Common;
 import com.example.joy.sweather.utils.NetUtil;
+import com.example.joy.sweather.utils.SpUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -45,8 +47,14 @@ public class WeatherInfoPresenter extends BasePresenter<IWeatherInfoView> {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                String s=response.body().string();
-                final Weather weather = Common.parseGson(s);
+                String weatherStr=response.body().string();
+
+                //保存天气json数据到缓存中
+                if (!TextUtils.isEmpty(weatherStr)) {
+                    SpUtils.getInstance().putString("weather",weatherStr);
+                }
+
+                final Weather weather = Common.parseGson(weatherStr);
                 mHanlder.post(new Runnable() {
                     @Override
                     public void run() {

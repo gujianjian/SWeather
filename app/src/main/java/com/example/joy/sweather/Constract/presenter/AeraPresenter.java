@@ -65,6 +65,10 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
     }
 
     public void onResume(String address) {
+
+
+
+
         mView.backButtonHide();
         mView.setTitle("中国");
         NetUtil.sendOkhttpClient(address, new Callback() {

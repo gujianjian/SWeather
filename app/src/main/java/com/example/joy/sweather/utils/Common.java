@@ -122,7 +122,7 @@ public class Common {
 
 
     /**
-     * 解析json数据
+     * 解析weather json数据
      * @param response
      * @return
      */
