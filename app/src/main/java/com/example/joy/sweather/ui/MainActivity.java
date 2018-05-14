@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putString("weatherId",weather_id);
             WeatherInfoActivity.createIntent(this,bundle);
+            finish();
         }
 
     }

@@ -7,7 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +35,7 @@ import java.io.InputStream;
  * 简介
  */
 
-public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherInfoPresenter> implements IWeatherInfoView{
+public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherInfoPresenter> implements IWeatherInfoView, View.OnClickListener {
 
     private WeatherInfoCommonView text_fl;
     private WeatherInfoCommonView text_wind_deg;
@@ -54,8 +57,13 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
     private TextView tv_update_time;//更新时间
 
-    private SwipeRefreshLayout srl_refresh;
-    private String weatherId;
+    public SwipeRefreshLayout srl_refresh;
+    public String weatherId;
+
+    //MD抽屉风格
+    public DrawerLayout drawer_layout;
+    //home图标打开抽屉
+    private ImageView iv_home;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,8 +72,11 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
         initView();
 
+        initListener();
+
 
     }
+
 
     public static void createIntent(Context context, Bundle bundle) {
         Intent intent=new Intent(context, WeatherInfoActivity.class);
@@ -116,6 +127,22 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
         //更新
         srl_refresh = findViewById(R.id.srl_refresh);
+
+
+
+        //更新时间
+        tv_update_time = findViewById(R.id.tv_update_time);
+
+        iv_home=findViewById(R.id.iv_home);
+
+
+        drawer_layout = findViewById(R.id.drawer_layout);
+
+    }
+
+
+    private void initListener() {
+        //设置更新图标颜色蓝色
         srl_refresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         srl_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -125,9 +152,18 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         });
 
 
-        tv_update_time = findViewById(R.id.tv_update_time);
-
+        iv_home.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_home:
+                drawer_layout.openDrawer(GravityCompat.START);
+                break;
+        }
+    }
+
 
     @Override
     protected WeatherInfoPresenter initPresenter() {
@@ -140,7 +176,9 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         Intent intent = getIntent();
         Bundle data = intent.getExtras();
         weatherId = data.getString("weatherId");
-        presenter.resume(weatherId);
+        if (!TextUtils.isEmpty(weatherId)) {
+            presenter.resume(weatherId);
+        }
     }
 
 
@@ -192,7 +230,9 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
             }
             tv_tmp.setText(tmp+"°");
 
-            tv_update_time.setText(weather.update.locTime);
+            //更新时间
+            String updateTimme=weather.update.locTime.split(" ")[1];
+            tv_update_time.setText("更新于:"+updateTimme);
 
 
             /********设置详细信息****************************/
@@ -213,7 +253,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
     @Override
     public void onFailure(String msg) {
-        Toast.makeText(WeatherInfoActivity.this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(WeatherInfoActivity.this, msg, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -235,6 +275,6 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
     @Override
     public void onBackPressed() {
-
+        this.finish();
     }
 }

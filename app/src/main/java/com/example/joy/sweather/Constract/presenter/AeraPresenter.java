@@ -73,8 +73,8 @@ public class AeraPresenter extends BasePresenter<IAeraView> {
         mView.setTitle("中国");
         NetUtil.sendOkhttpClient(address, new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
-                mView.onFailure(e.getMessage());
+            public void onFailure(Request request, final IOException e) {
+                String message = e.getMessage();
             }
 
             @Override

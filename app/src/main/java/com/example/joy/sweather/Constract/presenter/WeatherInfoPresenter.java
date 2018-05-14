@@ -71,8 +71,11 @@ public class WeatherInfoPresenter extends BasePresenter<IWeatherInfoView> {
 
 
     //加载bing图片
-
     public void loadPic(){
+        String bingPicUrl = SpUtils.getInstance().getString("bing_pic", "");
+        if (!TextUtils.isEmpty(bingPicUrl)) {
+            mView.loadBingPic(bingPicUrl);
+        }
         NetUtil.sendOkhttpClient(Canstants.BING_PIC_ADDRESS, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -81,14 +84,19 @@ public class WeatherInfoPresenter extends BasePresenter<IWeatherInfoView> {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                final String s=response.body().string();
+                final String bing_pic=response.body().string();
 
-                mHanlder.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.loadBingPic(s);
-                    }
-                });
+                if (!TextUtils.isEmpty(bing_pic)) {
+                    SpUtils.getInstance().putString("bing_pic",bing_pic);
+                    mHanlder.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mView.loadBingPic(bing_pic);
+                        }
+                    });
+                }
+
+
             }
         });
     }

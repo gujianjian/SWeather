@@ -15,7 +15,7 @@ import com.example.joy.sweather.Constract.presenter.WeatherInfoPresenter;
 
 public abstract class BaseActivity<V,T extends BasePresenter<V>> extends AppCompatActivity  {
 
-    protected T presenter;
+    public T presenter;
 
 
     @Override

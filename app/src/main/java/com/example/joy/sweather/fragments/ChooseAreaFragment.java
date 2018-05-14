@@ -17,6 +17,7 @@ import com.example.joy.sweather.Constract.presenter.AeraPresenter;
 import com.example.joy.sweather.Constract.view.IAeraView;
 import com.example.joy.sweather.R;
 import com.example.joy.sweather.base.BaseFragment;
+import com.example.joy.sweather.ui.MainActivity;
 import com.example.joy.sweather.ui.WeatherInfoActivity;
 import com.example.joy.sweather.utils.Canstants;
 
@@ -104,11 +105,25 @@ public class ChooseAreaFragment extends BaseFragment<IAeraView,AeraPresenter> im
      */
     @Override
     public void invokeWeatherInfo(String weatherId) {
-        Intent intent = new Intent(getActivity(), WeatherInfoActivity.class);
-        Bundle data = new Bundle();
-        data.putString("weatherId", weatherId);
-        intent.putExtras(data);
-        getActivity().startActivity(intent);
+
+        //判读是否在天气详细页还是主页
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity= (MainActivity) getActivity();
+            Intent intent = new Intent(getActivity(), WeatherInfoActivity.class);
+            Bundle data = new Bundle();
+            data.putString("weatherId", weatherId);
+            intent.putExtras(data);
+            mainActivity.startActivity(intent);
+            mainActivity.finish();
+        } else if (getActivity() instanceof WeatherInfoActivity) {
+            WeatherInfoActivity weatherInfoActivity = (WeatherInfoActivity) getActivity();
+            weatherInfoActivity.drawer_layout.closeDrawers();
+            weatherInfoActivity.srl_refresh.setRefreshing(true);
+            weatherInfoActivity.weatherId=weatherId;
+            weatherInfoActivity.presenter.resume(weatherId);
+        }
+
+
 
     }
 
