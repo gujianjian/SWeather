@@ -23,7 +23,7 @@
         android:layout_marginLeft="15dp"
         android:text="04:59"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        />
 
     <View
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.joy.sweather.Constract.presenter.WeatherInfoPresenter;
@@ -52,6 +52,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     private ImageView iv_image_pic;
     private TextView tv_tmp;
     private LinearLayout ll_weather;
+
+    private FloatingActionButton float_button;
 
     private ImageView iv_bing_pic;
 
@@ -133,10 +135,12 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         //更新时间
         tv_update_time = findViewById(R.id.tv_update_time);
 
+        //home图标
         iv_home=findViewById(R.id.iv_home);
-
-
+        //抽屉
         drawer_layout = findViewById(R.id.drawer_layout);
+
+        float_button = findViewById(R.id.float_button);
 
     }
 
@@ -153,6 +157,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
 
         iv_home.setOnClickListener(this);
+
+        float_button.setOnClickListener(this);
     }
 
     @Override
@@ -160,6 +166,9 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         switch (v.getId()) {
             case R.id.iv_home:
                 drawer_layout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.float_button:
+                startActivity(new Intent(WeatherInfoActivity.this,SettingActivity.class));
                 break;
         }
     }
@@ -236,16 +245,16 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
 
             /********设置详细信息****************************/
-            text_fl.setWeatherInfoContent(body_tmp+"°");
-            text_wind_deg.setWeatherInfoContent(wind_deg+"°");
-            text_wind_dir.setWeatherInfoContent(wind_dir);
-            text_wind_sc.setWeatherInfoContent(wind_sc+"级");
-            text_wind_spd.setWeatherInfoContent(wind_spd);
-            text_hum.setWeatherInfoContent(hum+"%");
-            text_pcpn.setWeatherInfoContent(water);
-            text_vis.setWeatherInfoContent(vis+"公里");
-            text_pres.setWeatherInfoContent(pres+"帕");
-            text_cloud.setWeatherInfoContent(cloud);
+            text_fl.setInfoContent(body_tmp+"°");
+            text_wind_deg.setInfoContent(wind_deg+"°");
+            text_wind_dir.setInfoContent(wind_dir);
+            text_wind_sc.setInfoContent(wind_sc+"级");
+            text_wind_spd.setInfoContent(wind_spd);
+            text_hum.setInfoContent(hum+"%");
+            text_pcpn.setInfoContent(water);
+            text_vis.setInfoContent(vis+"公里");
+            text_pres.setInfoContent(pres+"帕");
+            text_cloud.setInfoContent(cloud);
         }else{
             ll_weather.setVisibility(View.INVISIBLE);
         }

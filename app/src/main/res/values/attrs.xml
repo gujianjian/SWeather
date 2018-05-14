@@ -2,7 +2,14 @@
 <resources>
 
     <declare-styleable name="WeatherInfoCommonView">
-        <attr name="weather_title" format="string"/>
-        <attr name="weather_content" format="string"/>
+        <attr name="my_title" format="string"/>
+        <attr name="my_content" format="string"/>
+        <attr name="my_titleSize" format="dimension"/>
+        <attr name="my_contentSize" format="dimension"/>
+        <attr name="my_title_color" format="color"/>
+        <attr name="my_content_color" format="color"/>
+
+
+
     </declare-styleable>
 </resources>
