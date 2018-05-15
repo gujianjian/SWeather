@@ -25,4 +25,14 @@ public class Canstants {
 
     //每天变换的bing图片
     public final static String BING_PIC_ADDRESS="http://guolin.tech/api/bing_pic";
+
+
+    //是否自动更新
+    public final static String IS_AUTO_UPDATE="is_auto_update";
+
+    //天气now 的缓存key
+    public final static String SP_WEATHER_KEY ="weather";
+
+    //bing图片的  缓存key
+    public final static String SP_BING_PIC_KEY ="bing_pic";
 }

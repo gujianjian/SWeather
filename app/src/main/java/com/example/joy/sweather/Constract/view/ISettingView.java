@@ -9,6 +9,7 @@ package com.example.joy.sweather.Constract.view;
 
 public interface ISettingView {
 
-    //启动更新
-    void setStartUpdateService();
+    //检测是否更新
+   void checkUpdateSetting(boolean isUpdate);
+
 }

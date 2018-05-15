@@ -107,6 +107,8 @@ public class ChooseAreaFragment extends BaseFragment<IAeraView,AeraPresenter> im
     public void invokeWeatherInfo(String weatherId) {
 
         //判读是否在天气详细页还是主页
+
+        //在主页则传入weatherId值，然后启动天气详细页
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity= (MainActivity) getActivity();
             Intent intent = new Intent(getActivity(), WeatherInfoActivity.class);

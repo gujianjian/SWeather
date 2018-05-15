@@ -23,7 +23,11 @@ import com.example.joy.sweather.Constract.view.IWeatherInfoView;
 import com.example.joy.sweather.R;
 import com.example.joy.sweather.base.BaseActivity;
 import com.example.joy.sweather.entity.Weather;
+import com.example.joy.sweather.service.AutoUpdateService;
 import com.example.joy.sweather.ui.common.WeatherInfoCommonView;
+import com.example.joy.sweather.utils.Canstants;
+import com.example.joy.sweather.utils.Common;
+import com.example.joy.sweather.utils.SpUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +39,7 @@ import java.io.InputStream;
  * 简介
  */
 
-public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherInfoPresenter> implements IWeatherInfoView, View.OnClickListener {
+public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView, WeatherInfoPresenter> implements IWeatherInfoView, View.OnClickListener {
 
     private WeatherInfoCommonView text_fl;
     private WeatherInfoCommonView text_wind_deg;
@@ -80,9 +84,8 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     }
 
 
-    public static void createIntent(Context context, Bundle bundle) {
-        Intent intent=new Intent(context, WeatherInfoActivity.class);
-        intent.putExtras(bundle);
+    public static void createIntent(Context context) {
+        Intent intent = new Intent(context, WeatherInfoActivity.class);
         context.startActivity(intent);
     }
 
@@ -111,7 +114,6 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         text_cloud = findViewById(R.id.weather_item_cloud);
 
 
-
         //当前城市
         text_city_title = findViewById(R.id.tv_city);
         //天气信息
@@ -131,12 +133,11 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         srl_refresh = findViewById(R.id.srl_refresh);
 
 
-
         //更新时间
         tv_update_time = findViewById(R.id.tv_update_time);
 
         //home图标
-        iv_home=findViewById(R.id.iv_home);
+        iv_home = findViewById(R.id.iv_home);
         //抽屉
         drawer_layout = findViewById(R.id.drawer_layout);
 
@@ -168,7 +169,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
                 drawer_layout.openDrawer(GravityCompat.START);
                 break;
             case R.id.float_button:
-                startActivity(new Intent(WeatherInfoActivity.this,SettingActivity.class));
+                startActivity(new Intent(WeatherInfoActivity.this, SettingActivity.class));
                 break;
         }
     }
@@ -182,18 +183,32 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = getIntent();
-        Bundle data = intent.getExtras();
-        weatherId = data.getString("weatherId");
-        if (!TextUtils.isEmpty(weatherId)) {
-            presenter.resume(weatherId);
-        }
-    }
 
+        //首先判断是否有缓存，如果有缓存则先读取缓存的数据
+
+        String weatherStr = SpUtils.getInstance().getString(Canstants.SP_WEATHER_KEY, "");
+        if (!TextUtils.isEmpty(weatherStr)) {
+            Weather weather = Common.parseGson(weatherStr);
+            if (weather.status.equals("ok")) {
+                presenter.resume(weather);
+            }
+
+        } else {
+            Intent intent = getIntent();
+            Bundle data = intent.getExtras();
+            String weatherId = data.getString("weatherId");
+            if (!TextUtils.isEmpty(weatherId)) {
+                presenter.resume(weatherId);
+            }
+        }
+
+
+    }
 
 
     /**
      * 加载天气详细信息
+     *
      * @param weather
      */
     @Override
@@ -201,10 +216,9 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
 
         //如果显示status为ok则有数据
-        if(weather.status.equals("ok")){
+        if (weather.status.equals("ok")) {
 
             ll_weather.setVisibility(View.VISIBLE);
-
 
 
             String body_tmp = weather.now.body_tmp;//体感温度
@@ -225,37 +239,36 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
             String tmp = weather.now.tmp;//温度
 
 
-
             /****设置天气基本信息****/
             text_city_title.setText(cityName);
             tv_text_info.setText(weather_info);
             AssetManager assets = getAssets();
             try {
                 InputStream stream = assets.open("weatherimage/" + imageCode + ".png");
-                Bitmap bitmap=BitmapFactory.decodeStream(stream);
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
                 iv_image_pic.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            tv_tmp.setText(tmp+"°");
+            tv_tmp.setText(tmp + "°");
 
             //更新时间
-            String updateTimme=weather.update.locTime.split(" ")[1];
-            tv_update_time.setText("更新于:"+updateTimme);
+            String updateTimme = weather.update.locTime.split(" ")[1];
+            tv_update_time.setText("更新于:" + updateTimme);
 
 
             /********设置详细信息****************************/
-            text_fl.setInfoContent(body_tmp+"°");
-            text_wind_deg.setInfoContent(wind_deg+"°");
+            text_fl.setInfoContent(body_tmp + "°");
+            text_wind_deg.setInfoContent(wind_deg + "°");
             text_wind_dir.setInfoContent(wind_dir);
-            text_wind_sc.setInfoContent(wind_sc+"级");
+            text_wind_sc.setInfoContent(wind_sc + "级");
             text_wind_spd.setInfoContent(wind_spd);
-            text_hum.setInfoContent(hum+"%");
+            text_hum.setInfoContent(hum + "%");
             text_pcpn.setInfoContent(water);
-            text_vis.setInfoContent(vis+"公里");
-            text_pres.setInfoContent(pres+"帕");
+            text_vis.setInfoContent(vis + "公里");
+            text_pres.setInfoContent(pres + "帕");
             text_cloud.setInfoContent(cloud);
-        }else{
+        } else {
             ll_weather.setVisibility(View.INVISIBLE);
         }
     }
@@ -269,6 +282,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
 
     /**
      * 加载背景图
+     *
      * @param url
      */
     @Override
@@ -276,9 +290,20 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView,WeatherIn
         Glide.with(this).load(url).into(iv_bing_pic);
     }
 
+
+    //srl_refresh控件结束更新
     @Override
     public void downRefresh() {
         srl_refresh.setRefreshing(false);
+    }
+
+
+    @Override
+    public void isStartUpdateService(boolean isStart) {
+        if (isStart) {
+            Intent i = new Intent(WeatherInfoActivity.this, AutoUpdateService.class);
+            startService(i);
+        }
     }
 
 

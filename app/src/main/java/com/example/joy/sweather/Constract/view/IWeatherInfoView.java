@@ -23,4 +23,7 @@ public interface IWeatherInfoView {
     //设置停止更新
     void downRefresh();
 
+    //检测缓存中设置的变量是否需要启动自动更新
+    void isStartUpdateService(boolean isStart);
+
 }

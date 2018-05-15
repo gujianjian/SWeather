@@ -13,6 +13,8 @@ import com.example.joy.sweather.R;
 import com.example.joy.sweather.base.BaseActivity;
 import com.example.joy.sweather.service.AutoUpdateService;
 import com.example.joy.sweather.ui.common.TitleCommonView;
+import com.example.joy.sweather.utils.Canstants;
+import com.example.joy.sweather.utils.SpUtils;
 
 import java.util.Set;
 
@@ -56,13 +58,9 @@ public class SettingActivity extends BaseActivity<ISettingView, SettingPresenter
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.resume();
     }
 
-
-    @Override
-    public void setStartUpdateService() {
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -73,11 +71,18 @@ public class SettingActivity extends BaseActivity<ISettingView, SettingPresenter
                 boolean isChecked = mSwitch.isChecked();
                 if (isChecked) {
                     startService(serviceIntent);
+
                 }else{
                     stopService(serviceIntent);
                 }
-
+                SpUtils.getInstance().putBoolean(Canstants.IS_AUTO_UPDATE,isChecked);
                 break;
         }
+    }
+
+    @Override
+    public void checkUpdateSetting(boolean isUpdate) {
+        //设置是否开启
+        mSwitch.setChecked(isUpdate);
     }
 }

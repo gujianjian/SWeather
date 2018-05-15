@@ -23,13 +23,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //判断是否有缓存，如果有则直接进入天气详细页
         String weatherStr = SpUtils.getInstance().getString("weather", "");
         if (!TextUtils.isEmpty(weatherStr)) {
-            Weather weather = Common.parseGson(weatherStr);
-            String weather_id = weather.basic.weather_id;
-            Bundle bundle = new Bundle();
-            bundle.putString("weatherId",weather_id);
-            WeatherInfoActivity.createIntent(this,bundle);
+            WeatherInfoActivity.createIntent(this);
             finish();
         }
 
