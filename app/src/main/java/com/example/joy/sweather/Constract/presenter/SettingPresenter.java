@@ -1,6 +1,10 @@
 package com.example.joy.sweather.Constract.presenter;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import com.example.joy.sweather.Constract.view.ISettingView;
+import com.example.joy.sweather.application.BaseApplication;
 import com.example.joy.sweather.base.BasePresenter;
 import com.example.joy.sweather.utils.Canstants;
 import com.example.joy.sweather.utils.SpUtils;
@@ -20,5 +24,16 @@ public class SettingPresenter extends BasePresenter<ISettingView> {
 
         boolean is_update = SpUtils.getInstance().getBoolean(Canstants.IS_AUTO_UPDATE, false);
         mView.checkUpdateSetting(is_update);
+
+
+        PackageManager packageManager = BaseApplication.getInstance().getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(BaseApplication.getInstance().getPackageName(), 0);
+            String versionName = packageInfo.versionName;
+            mView.checkVersion(versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -12,4 +12,6 @@ public interface ISettingView {
     //检测是否更新
    void checkUpdateSetting(boolean isUpdate);
 
+
+   void checkVersion(String version);
 }

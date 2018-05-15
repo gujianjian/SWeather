@@ -8,30 +8,49 @@
     <com.example.joy.sweather.ui.common.TitleCommonView
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.joy.sweather.ui.common.WeatherInfoCommonView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:my_content="自动实时更新最新天气信息"
+                app:my_contentSize="16sp"
+                app:my_content_color="@android:color/darker_gray"
+                app:my_title="自动更新天气"
+                app:my_titleSize="20sp"
+                app:my_title_color="@android:color/black" />
+
+            <Switch
+                android:id="@+id/switch_update_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:checked="false" />
+        </RelativeLayout>
+
 
         <com.example.joy.sweather.ui.common.WeatherInfoCommonView
-
+            android:id="@+id/version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:my_content="自动实时更新最新天气信息"
+            app:my_content="v1.0"
             app:my_contentSize="16sp"
             app:my_content_color="@android:color/darker_gray"
-            app:my_title="自动更新天气"
+            app:my_title="当前版本"
             app:my_titleSize="20sp"
             app:my_title_color="@android:color/black" />
 
-        <Switch
-            android:id="@+id/switch_update_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:checked="false" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
