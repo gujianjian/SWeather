@@ -189,6 +189,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView, WeatherI
         String weatherStr = SpUtils.getInstance().getString(Canstants.SP_WEATHER_KEY, "");
         if (!TextUtils.isEmpty(weatherStr)) {
             Weather weather = Common.parseGson(weatherStr);
+            weatherId=weather.basic.weather_id;
             if (weather.status.equals("ok")) {
                 presenter.resume(weather);
             }
@@ -196,7 +197,7 @@ public class WeatherInfoActivity extends BaseActivity<IWeatherInfoView, WeatherI
         } else {
             Intent intent = getIntent();
             Bundle data = intent.getExtras();
-            String weatherId = data.getString("weatherId");
+            weatherId = data.getString("weatherId");
             if (!TextUtils.isEmpty(weatherId)) {
                 presenter.resume(weatherId);
             }
